@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Welcome, {{ request.user.username }}!</h2>
+
+<div class="text-end mb-3">
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Logout</a>
+</div>
+
+{% if is_admin %}
+    <h4>All Users</h4>
+    <ul class="list-group mb-4">
+        {% for user in users %}
+            <li class="list-group-item">{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+
+    <h4>All Tasks</h4>
+    <ul class="list-group">
+        {% for task in tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ task.title }} - <strong>{{ task.user.username }}</strong></span>
+                <span class="badge {% if task.is_completed %}bg-success{% else %}bg-warning{% endif %}">
+                    {% if task.is_completed %}Completed{% else %}Pending{% endif %}
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="card p-4 mb-4">
+        <h4>Add a New Task</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-custom">Add Task</button>
+        </form>
+    </div>
+
+    <h4>Your Tasks</h4>
+    <ul class="list-group">
+        {% for task in tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{% if task.is_completed %}<del>{{ task.title }}</del>{% else %}{{ task.title }}{% endif %}</span>
+                <div>
+                    <a href="{% url 'toggle_complete' task.id %}" class="btn btn-sm btn-outline-success me-1">
+                        {% if task.is_completed %}Undo{% else %}Complete{% endif %}
+                    </a>
+                    <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

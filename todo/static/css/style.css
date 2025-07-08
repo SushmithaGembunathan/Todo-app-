@@ -1,0 +1,19 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f8f9fa;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+form input[type="text"],
+form input[type="password"] {
+    border-radius: 8px;
+}
+
+.btn-custom {
+    border-radius: 8px;
+    padding: 8px 18px;
+}
