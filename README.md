@@ -24,11 +24,3 @@ Admins can view all users and all tasks.
 - Bootstrap (for styling)
 
 ---
-
-## 📦 Installation
-
-1. **Clone the repository:**
-
-```bash
-git clone https://github.com/SushmithaGembunathan/Todo-app-.git
-cd Todo-app-
